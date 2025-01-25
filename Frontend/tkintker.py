@@ -1,28 +1,25 @@
 import tkinter as tk
 import requests
-import json
+
+def new_label(input:int,answer:str):
+    label_history = tk.Label(root, text=input, font=("Arial", 18), wraplength=500,anchor='e')
+    label_history.pack(fill='both', padx=10)
+    
+    label_output = tk.Label(root, text=answer, font=("Arial", 18),wraplength=500, anchor='w')
+    label_output.pack(fill='both', padx=10)
 
 
 def on_enter_pressed(event):
     global f
     # Get the text from the Text widget
     input = text.get("1.0", tk.END).strip()
-    f = open("input.txt", "a")
-    f.writelines(input + "\n")
-
     url = f"http://localhost:3000/data/{input}"
     responce = requests.get(url)
     answer = responce.text
-
-    label_output.config(text=answer, font=("Arial", 14))  # you can update the pre existing label
-    f.close()
-    f_1 = open("input.txt", "r")
-    history = f_1.read()
-    label_history.config(text=history, font=("Arial", 14))  # you can update the pre existing label
-    f_1.close()
+    new_label(input,answer)
     text.delete("1.0", tk.END)  # Clear the Text widget after input is processed
 
-
+input_list=[]
 root = tk.Tk()
 root.title("AI")
 root.geometry("400x300")
@@ -40,7 +37,7 @@ label_history.pack()
 
 # used to type text
 text = tk.Text(root, height=6, font=("Ariel", 18))  # specifing same as label except text not acceptable
-text.pack()  # calling the root same as the features of label
+text.pack(fill='x', padx=10)  # calling the root same as the features of label
 # Bind the Enter key to trigger the function
 root.bind("<Return>", on_enter_pressed)
 
