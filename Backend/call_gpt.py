@@ -2,9 +2,9 @@ import requests
 
 
 def query_llm(user_input, list_of_functions):
-    url = "https://gpt.ovcraft.com/api/chat/completions"
-    model = "Coder"
-    token = "sk-5ce2a244c6e34efab12491365bafed31"
+    url = "http://localhost/api/chat/completions"
+    model = "qwen2.5-coder:1.5b"
+    token = "sk-49d2c4da7c664a9d9f10fa2022215f5e"
 
     prompt = f"""You are an AI assistant whose job is to identify which functions 
                 you should call based on a natural language prompt. 
@@ -27,6 +27,7 @@ def query_llm(user_input, list_of_functions):
 
     response = requests.post(url, headers=headers, json=payload)
     return response.json()['choices'][0]["message"]["content"]
+
 
 if __name__ == "__main__":
     print(query_llm("prompt", "Func 1, 2, 3"))
