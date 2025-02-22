@@ -1,7 +1,8 @@
 import uvicorn
 from fastapi import FastAPI
-from call_gpt import call_gpt_endpoint
+from call_gpt import chat_completion_request
 from get_all_functions import get_list_of_functions
+from excecute_command import run_command
 import tkinter
 
 app = FastAPI()
@@ -13,8 +14,10 @@ def read_user(user_data: str):
     list_of_functions = get_list_of_functions()
     print(list_of_functions)
 
-    output = call_gpt_endpoint(list_of_functions, user_data)
+    output = chat_completion_request(user_request=user_data, functions=list_of_functions)
     print(output)
+
+    run_command(output)
 
     return output
 
